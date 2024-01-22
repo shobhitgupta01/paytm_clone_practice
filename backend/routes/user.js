@@ -1,6 +1,6 @@
 const express = require("express");
 const { User } = require('../db');
-const { validateSignup } = require('../middleware/user');
+const { validateSignup, validateLogin } = require('../middleware/user');
 const jwt = require("jsonwebtoken");
 const { JWT_SECRET } = require("../config");
 const router = express.Router()
@@ -17,6 +17,7 @@ router.post('/signup', validateSignup, async (req, res) => {
     res.status(411).json({
       message: "Email already taken / Incorrect inputs"
     });
+    return;
   }
 
   const newUser = new User({
@@ -41,5 +42,29 @@ router.post('/signup', validateSignup, async (req, res) => {
     token: token
   });
 })
+
+router.post('/login', validateLogin, async (req, res)=>{
+  const userData = req.body;
+  let user = await User.findOne({username : req.body.username});
+  if(user && await user.validatePassword(req.body.password)){
+    const userId = user._id;
+    const token = jwt.sign({
+      userId
+    }, JWT_SECRET);
+    res.json({
+      jwt: token
+    });
+    return;
+  }
+  else{
+    res.status(411).json({
+      message: "Error while logging in"
+    });
+    return;
+  }
+
+
+
+});
 
 module.exports = router;

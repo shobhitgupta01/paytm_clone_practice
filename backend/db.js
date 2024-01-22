@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
 
 mongo_url = "mongodb://localhost:27017"
 db_name = 'paytm'
