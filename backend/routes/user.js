@@ -44,13 +44,13 @@ router.post('/signup', validateSignup, async (req, res) => {
 })
 
 router.post('/login', validateLogin, async (req, res)=>{
-  const userData = req.body;
   let user = await User.findOne({username : req.body.username});
   if(user && await user.validatePassword(req.body.password)){
-    const userId = user._id;
+ 
     const token = jwt.sign({
-      userId
+      userId: user._id
     }, JWT_SECRET);
+    
     res.json({
       jwt: token
     });

@@ -61,10 +61,24 @@ userSchema.methods.validatePassword = async function(candidatePassword) {
   return await bcrypt.compare(candidatePassword, this.password);
 };
 
+// Accounts Schema
+const AccountsSchema = new mongoose.Schema({
+  userId : {
+    type: String,
+    required : true
+  },
+  balance : {
+    type: Number,
+    required: true
+  }
+});
+
 
 // models
 const User = mongoose.model('User', userSchema);
+const Account = mongoose.model('Account', AccountsSchema);
 
 module.exports = {
-  User
+  User,
+  Account
 }
