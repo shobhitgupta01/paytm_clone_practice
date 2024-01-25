@@ -1,7 +1,10 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
+// Require and configure dotenv
+require('dotenv').config();
 
-mongo_url = "mongodb://localhost:27017"
+// Access your API key
+const mongo_url = process.env.MONGO_URL;
 db_name = 'paytm'
 
 async function connectDB() {
