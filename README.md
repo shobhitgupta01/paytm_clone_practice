@@ -1,4 +1,4 @@
-## Paytm cline app
+## Paytm clone app
 
 This project contains a simple paytm clone with transfer feature.
 
