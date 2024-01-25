@@ -111,7 +111,12 @@ router.get('/bulk', authMiddleware, async (req, res)=>{
       }}
     ]});
     return res.json({
-      users : userList
+      users : userList.map(user => ({
+        username : user.username,
+        firstName : user.firstName,
+        lastName: user.lastName,
+        _id: user._id
+      }))
     });
   }
   catch(error){
@@ -119,9 +124,6 @@ router.get('/bulk', authMiddleware, async (req, res)=>{
       message: "Error while getting information"
     });
   }
-
-  
-
 });
 
 module.exports = router;
