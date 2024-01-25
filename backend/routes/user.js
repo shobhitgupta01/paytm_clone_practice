@@ -1,13 +1,13 @@
 const express = require("express");
 const { User } = require('../db');
-const { validateSignup, validateLogin } = require('../middleware/user');
+const { validateSignup, validateLogin, validateUserUpdate } = require('../middleware/user');
 const { authMiddleware } = require('../middleware/auth');
 const jwt = require("jsonwebtoken");
 const { JWT_SECRET } = require("../config");
 const router = express.Router()
 
 
-router.put('/', authMiddleware, async (req, res)=>{
+router.put('/',authMiddleware,validateUserUpdate, async (req, res)=>{
   
   const user = await User.findOne({_id: req.userId});
   if(!user || Object.keys(req.body).length === 0){
@@ -21,15 +21,9 @@ router.put('/', authMiddleware, async (req, res)=>{
     req.body.password = hashedPassword;
   }
 
-  const keysToExtract = ['firstName', 'lastName', 'password']
-  const update_body = Object.fromEntries(
-    keysToExtract.filter(key => req.body.hasOwnProperty(key))
-    .map(key=> [key, req.body[key]])
-    );
-
   //updating
   try{
-    await User.updateOne({_id : req.userId},update_body)
+    await User.updateOne({_id : req.userId},req.body)
   }
   catch(error){
     return res.status(411).json({

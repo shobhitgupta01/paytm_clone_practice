@@ -11,6 +11,7 @@ function validateSignup(req, res, next) {
   const response = schema.safeParse(req.body);
 
   if (response.success) {
+    req.body = response.data;
     next();
   }
   else {
@@ -30,6 +31,7 @@ function validateLogin(req, res, next) {
   const response = schema.safeParse(req.body);
 
   if (response.success) {
+    req.body = response.data;
     next();
   }
   else {
@@ -40,8 +42,26 @@ function validateLogin(req, res, next) {
   }
 }
 
+function validateUserUpdate(req, res, next){
+  const updateBody = zod.object({
+    password: zod.string().optional(),
+      firstName: zod.string().optional(),
+      lastName: zod.string().optional(),
+  });
+  const response = updateBody.safeParse(req.body);
+  if(!response.success){
+    return res.status(411).json({
+      message: "Error while updating information"
+    });
+  }
+  else{
+    req.body = response.data;
+    next();
+  }
+}
 
 module.exports = {
   validateSignup,
-  validateLogin
+  validateLogin,
+  validateUserUpdate
 }
