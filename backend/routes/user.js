@@ -95,7 +95,32 @@ router.post('/login', validateLogin, async (req, res)=>{
     return;
   }
 
+});
 
+router.get('/bulk', authMiddleware, async (req, res)=>{
+  const filter = req.query.filter || '';
+  try{
+     const userList = await User.find({$or:[
+      {'firstName' : {
+        "$regex" : filter,
+        '$options' : 'i'
+      }},
+      {'lastName' : {
+        "$regex" : filter,
+        '$options' : 'i'
+      }}
+    ]});
+    return res.json({
+      users : userList
+    });
+  }
+  catch(error){
+    return res.status(411).json({
+      message: "Error while getting information"
+    });
+  }
+
+  
 
 });
 
