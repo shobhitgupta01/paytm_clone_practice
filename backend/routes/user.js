@@ -1,5 +1,5 @@
 const express = require("express");
-const { User } = require('../db');
+const { User, Account } = require('../db');
 const { validateSignup, validateLogin, validateUserUpdate } = require('../middleware/user');
 const { authMiddleware } = require('../middleware/auth');
 const jwt = require("jsonwebtoken");
@@ -64,6 +64,15 @@ router.post('/signup', validateSignup, async (req, res) => {
   const user = await newUser.save();
 
   const userId = user._id;
+
+  //initialising balance
+  const balance = Math.floor(1 + Math.random()*9999)
+  const newAccount = new Account({
+    userId : userId,
+    balance : balance * 100
+  });
+
+  await newAccount.save();
 
   const token = jwt.sign({
     userId
