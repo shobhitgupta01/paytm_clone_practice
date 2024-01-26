@@ -1,4 +1,7 @@
+import { useNavigate } from "react-router-dom"
+
 export default function SignIn(){
+    const navigate = useNavigate();
     return(
         <div className="bg-neutral-400 h-screen flex justify-center">
             <div className="bg-white mt-20 h-fit p-10 rounded-lg ">
@@ -10,7 +13,7 @@ export default function SignIn(){
                 <div className="text-lg font-semibold mb-2">Password</div>
                 <div className="mb-6"><input className="border border-slate-300 text-gray-500 rounded-md w-full h-9 p-3" type="password"/></div>
                 <button className="bg-black text-white w-full h-10 rounded-md p-2 mb-6">Sign In</button>
-                <div className="text-center">Dont have an account? <span className="underline cursor-pointer">Sign Up</span></div>
+                <div className="text-center">Dont have an account? <span className="underline cursor-pointer" onClick={()=>navigate("/signup")}>Sign Up</span></div>
 
             </div>
             
