@@ -1,4 +1,14 @@
+import { useNavigate } from "react-router-dom";
+
 export default function SendMoney(){
+
+  const navigate = useNavigate();
+  useEffect(()=>{
+    if (!localStorage.getItem('token')){
+      navigate('/');
+    }
+  },[])
+
   return (
     <div className="flex justify-center h-screen bg-gray-100">
       <div className="h-full flex flex-col justify-center">
@@ -19,7 +29,7 @@ export default function SendMoney(){
                   className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                   htmlFor="amount"
                 >
-                  Amount (in Rs)
+                  Amount (in &#8377;)
                 </label>
                 <input
                   type="number"

@@ -1,4 +1,4 @@
-export default function InputBox({label, placeholder, type = 'text'}){
+export default function InputBox({label, placeholder, type = 'text', onChange}){
     return(
         <div>
             <div className="text-lg font-semibold mb-2">
@@ -9,6 +9,7 @@ export default function InputBox({label, placeholder, type = 'text'}){
                 className="border border-slate-300 text-gray-500 rounded-md w-full h-9 p-3" 
                 type={type}
                 placeholder={placeholder}
+                onChange={onChange}
                 />
             </div>
         </div>

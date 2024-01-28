@@ -1,12 +1,9 @@
 import React, { Suspense } from "react";
 import {BrowserRouter, Routes, Route, Navigate} from "react-router-dom";
-
 const SignIn = React.lazy(()=>import("./pages/SignIn"));
 const SignUp = React.lazy(()=>import("./pages/SignUp"));
 const Dashboard = React.lazy(()=>import("./pages/Dashboard"));
 const SendMoney = React.lazy(()=>import("./pages/SendMoney"));
-
-
 
 function App() {
 
