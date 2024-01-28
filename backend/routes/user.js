@@ -135,4 +135,19 @@ router.get('/bulk', authMiddleware, async (req, res)=>{
   }
 });
 
+router.get('/details', authMiddleware, async (req, res)=>{
+  const user = await User.findOne({"_id": req.userId});
+  if(!user){
+    return res.status(401).json({
+      message: "User not found"
+    });
+  }
+  res.json({
+    username : user.username,
+    firstName : user.firstName,
+    lastName: user.lastName,
+    _id: user._id
+  })
+})
+
 module.exports = router;
