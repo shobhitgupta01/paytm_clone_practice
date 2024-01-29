@@ -40,27 +40,27 @@ export default function Users() {
         placeholder="Search users..."
         onChange={(e) => setFilter(e.target.value)}
       />
-      {users.map((user) => (
-        <User key={user._id} name={user.firstName} />
+      {users.map((user,idx) => (
+        <User key={idx} user={user} />
       ))}
     </div>
   );
 }
 
-function User({ name }) {
+function User({ user }) {
   const navigate = useNavigate();
   return (
     <div className="mb-5 p-5 flex items-center justify-between shadow-lg shadow-slate-100">
       <div className="flex items-center">
         <div className="rounded-full bg-gray-200 h-10 w-10 p-5 flex items-center justify-center mr-5">
-          {name[0]}
+          {user.firstName[0]}
         </div>
-        <div className="text-xl font-semibold">{name}</div>
+        <div className="text-xl font-semibold">{user.firstName}</div>
       </div>
 
       <button
         className="p-3 bg-black text-white rounded-md"
-        onClick={() => navigate("/send")}
+        onClick={() => navigate(`/send?id=${user._id}&name=${user.firstName}`)}
       >
         Send Money
       </button>
